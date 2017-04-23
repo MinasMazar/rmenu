@@ -1,5 +1,5 @@
 require "rmenu/version"
+require "rmenu/dmenu/wrapper"
 
 module Rmenu
-  # Your code goes here...
 end

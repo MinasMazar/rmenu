@@ -5,7 +5,7 @@ RSpec.describe Rmenu do
     expect(Rmenu::VERSION).not_to be nil
   end
 
-  it "does something useful" do
-    expect(false).to eq(true)
+  it "has a dmenu wrapper class" do
+    expect(defined?(Rmenu::Dmenu::Wrapper)).to be_truthy
   end
 end
