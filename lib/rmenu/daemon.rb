@@ -1,4 +1,3 @@
-
 module Rmenu
   class Daemon
     attr_accessor :config
@@ -20,8 +19,8 @@ module Rmenu
     def start
       self.listening = true
       self.listening_thread = Thread.new do
-        LOGGER.info "Created listening thread.. wait for wake code at #{conf[:waker_io]}.."
-        while self.listening && keep_open? || (wake_code = File.read(conf[:waker_io]).chomp).to_sym
+        LOGGER.info "Created listening thread.. wait for wake code at #{config[:waker_io]}.."
+        while self.listening && (wake_code = File.read(config[:waker_io]).chomp).to_sym
           item = gets
           proc item
         end
@@ -38,6 +37,10 @@ module Rmenu
 
     def dmenu_instance
       Dmenu::Wrapper.new config
+    end
+
+    def proc(cmd)
+      Rmenu::Organizers::Executor.call cmd: cmd
     end
   end
 end

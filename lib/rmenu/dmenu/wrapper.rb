@@ -70,7 +70,7 @@ module Rmenu
         pipe.close_write
         LOGGER.debug "PipeCommand> #{command}"
         value = pipe.read
-        LOGGER.debug "PipeCommand< #{value}"
+        LOGGER.debug "PipeCommand< #{value.chomp}"
         pipe.close
         if $?.exitstatus > 0
           return nil

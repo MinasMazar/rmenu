@@ -3,22 +3,24 @@ require 'thor'
 module Rmenu
   class CLI < Thor
 
+    DEFAULT_WAKER_IO = File.expand_path(File.join("~", ".rmenu_waker"))
+
     no_commands do
 
       def config
-        @config ||= { lines: 11, items: items }
+        @config ||= { waker_io: DEFAULT_WAKER_IO, lines: 11, items: items }
       end
 
       def items
-        @items = STDIN.readlines
+        @items = []
       end
 
       def rmenu_daemon
-        Rmenu::Daemon.new config
+        @rmenu_daemon ||= Rmenu::Daemon.new config
       end
 
       def rmenu_instance
-        Rmenu::Dmenu::Wrapper.new config
+        @rmenu_instance||= Rmenu::Dmenu::Wrapper.new config
       end
     end
 
@@ -32,6 +34,7 @@ module Rmenu
       rmenu_daemon.start do |item|
         puts item
       end
+      sleep 0.8
       rmenu_daemon.listening_thread.join
     rescue Interrupt
       puts "Interrupt catched.. exiting"
