@@ -1,0 +1,4 @@
+require 'rmenu'
+require 'rmenu/cli'
+
+Rmenu::CLI.start ARGV
