@@ -36,8 +36,9 @@ module Rmenu
       def history_file_content
         <<-EOS
 ---
-- item1
-- item2
+:history:
+  . item1
+  - item2
         EOS
       end
     end

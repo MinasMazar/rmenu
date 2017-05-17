@@ -38,19 +38,22 @@ module Rmenu
       open_url result.url if result.url
       if result.save_item
         config[:history] << result.save_item
-        LOGGER.info "Added #{cmd} to history"
+        LOGGER.info "Added #{result.save_item} to history"
         save_config config_file
       end
       if result[:submenu]
+        context[:back] = context[:menu]
         context[:menu] = result[:submenu]
         proc
-        back! if result[:go_back] || item[:go_back]
+        back! if result[:go_back]
       end
-      proc if result[:keep_open] || item[:keep_open]
+      back! if result[:go_back]
       context
     rescue
       LOGGER.debug "#{$!.class} catched."
       LOGGER.debug $!.message
+      LOGGER.debug $!.backtrace.join("\n")
+      false
     end
 
     def config
@@ -68,6 +71,7 @@ module Rmenu
     end
 
     def back!
+      LOGGER.info "Going to back menu"
       context[:menu] = context[:back] || history
     end
 
@@ -83,7 +87,6 @@ module Rmenu
     end
 
     def load_config(config_file)
-      raise "Unable to load config file: #{config_file}" unless config_file
       if config_file && File.exist?(config_file)
         _config = YAML.load_file config_file
         LOGGER.info "Loaded config from #{config_file}"
