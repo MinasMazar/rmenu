@@ -1,8 +1,11 @@
 require "spec_helper"
 
 RSpec.describe Rmenu::Daemon do
+  include Rmenu::Test::Helpers
+
   let(:described_instance) { described_class.new config}
-  let(:config) { {} }
+  let(:config) { { config_file: RSpec.configuration.history_file } }
+  before { create_history_file }
 
   describe "#start" do
     before { described_instance.start }

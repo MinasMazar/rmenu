@@ -18,6 +18,13 @@ module Rmenu
       proc
     end
 
+    def proc
+      result = super
+      return unless result
+      keep_open! if result[:keep_open]
+      context
+    end
+
     def stop
       super
       self.listening = false
@@ -37,7 +44,9 @@ module Rmenu
     alias :sav :save_config
     alias :s :save_config
 
-    private
+    def keep_open!
+      context[:keep_open] = true
+    end
 
     def keep_open?
       context[:keep_open]

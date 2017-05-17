@@ -9,6 +9,7 @@ module Rmenu
         item = context.item
         proc_array item[:cmd] if item[:cmd].is_a? Array
         proc_string item[:cmd] if item[:cmd].is_a? String
+        proc_context item if item.is_a? Hash
       end
 
       private
@@ -29,6 +30,11 @@ module Rmenu
         else
           context.shell_cmd = cmd
         end
+      end
+
+      def proc_context item
+        context.keep_open = item[:keep_open]
+        context.go_back = item[:go_back] || item[:back]
       end
 
       def validate_context!
