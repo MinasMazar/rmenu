@@ -7,7 +7,7 @@ module Rmenu
       end
 
       def items
-        @items.map { |h| h[:label] }
+        @items.map { |h| h.is_a?(Hash) ? h[:label] : h.to_s }
       end
 
       def run
