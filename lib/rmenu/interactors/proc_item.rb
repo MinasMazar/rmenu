@@ -27,6 +27,8 @@ module Rmenu
           context.url = md[1]
         elsif md = cmd.match(/\s*\+\s*(.+)/)
           context.save_item = { label: md[1].capitalize, cmd: md[1] }
+        elsif md = cmd.match(/^\s*;\s*(.+)/)
+          context.shell_cmd = "#{context.exec_in_term} #{md[1]}"
         else
           context.shell_cmd = cmd
         end
