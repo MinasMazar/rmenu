@@ -1,7 +1,6 @@
 
 module Rmenu
   module MenuHelper
-
     def evaluated_menu(_menu)
       _menu.map do |h|
         if h.is_a? Hash
