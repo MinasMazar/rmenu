@@ -86,6 +86,18 @@ module Rmenu
       Wrapper::LabelledDmenu.new rmenu_params
     end
 
+    def pick(prompt, items, show_result = false)
+      Wrapper::Dmenu.new(context.merge prompt: prompt, items: items).run.tap do |result|
+        message result if show_result
+      end
+    end
+    alias :p :pick
+
+    def message(msg)
+      Wrapper::Dmenu.new(context.merge prompt: msg, items: []).run
+    end
+    alias :m :message
+
     def load_config(config_file)
       if config_file && File.exist?(config_file)
         _config = YAML.load_file config_file
