@@ -23,7 +23,7 @@ module Rmenu
         return if cmd.nil? || cmd == ''
         if md = cmd.match(/^\s*:\s*(.+)/)
           context.eval_cmd = md[1].strip
-        elsif md = cmd.match(/^\s*(http:\/\/.+)/)
+        elsif md = cmd.match(/^\s*(https?:\/\/.+)/)
           context.url = md[1]
         elsif md = cmd.match(/\s*\+\s*(.+)/)
           context.save_item = { label: md[1].capitalize, cmd: md[1] }
