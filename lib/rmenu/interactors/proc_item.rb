@@ -35,7 +35,7 @@ module Rmenu
       end
 
       def proc_context item
-        context.keep_open = item[:keep_open]
+        context.keep_open ||= item[:keep_open]
         context.go_back = item[:go_back] || item[:back]
       end
 

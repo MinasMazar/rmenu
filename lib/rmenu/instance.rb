@@ -33,6 +33,7 @@ module Rmenu
         history: history.dup,
         item: item
       })
+      context[:item] = result[:item]
       instance_eval eval_input result.eval_cmd if result.eval_cmd
       exec_cmd eval_input eval_block result.shell_cmd if result.shell_cmd
       open_url eval_input eval_block result.url if result.url
@@ -45,7 +46,6 @@ module Rmenu
         context[:back] = context[:menu]
         context[:menu] = result[:submenu]
         proc
-        back! if result[:go_back]
       end
       back! if result[:go_back]
       context

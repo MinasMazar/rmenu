@@ -21,7 +21,7 @@ module Rmenu
     def proc
       result = super
       return unless result
-      keep_open! if result[:keep_open]
+      keep_open! if result[:keep_open] || result[:item] && result[:item][:keep_open]
       context
     end
 
@@ -47,9 +47,15 @@ module Rmenu
     def keep_open!
       context[:keep_open] = true
     end
+    alias :ko! :keep_open!
 
     def keep_open?
       context[:keep_open]
     end
+
+    def keep_close!
+      context[:keep_open] = false
+    end
+    alias :kc! :keep_close!
   end
 end
