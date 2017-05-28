@@ -1,6 +1,7 @@
 require "rmenu/version"
 require "logger"
 require "yaml"
+require "rmenu/monkey_patch"
 require "rmenu/interactors"
 require "rmenu/instance"
 require "rmenu/daemon"
