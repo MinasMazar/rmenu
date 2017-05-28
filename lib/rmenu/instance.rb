@@ -33,9 +33,9 @@ module Rmenu
         history: history.dup,
         item: item
       })
-      instance_eval result.eval_cmd if result.eval_cmd
-      exec_cmd result.shell_cmd if result.shell_cmd
-      open_url result.url if result.url
+      instance_eval eval_input result.eval_cmd if result.eval_cmd
+      exec_cmd eval_input eval_block result.shell_cmd if result.shell_cmd
+      open_url eval_input eval_block result.url if result.url
       if result.save_item
         config[:history] << result.save_item
         LOGGER.info "Added #{result.save_item} to history"
@@ -86,7 +86,7 @@ module Rmenu
       Wrapper::LabelledDmenu.new rmenu_params
     end
 
-    def pick(prompt, items, show_result = false)
+    def pick(prompt, items = [], show_result = false)
       Wrapper::Dmenu.new(context.merge prompt: prompt, items: items).run.tap do |result|
         message result if show_result
       end
@@ -158,5 +158,20 @@ module Rmenu
       cmd
     end
 
+    def eval_input(cmd)
+      replaced_cmd = cmd.to_s
+      while md = replaced_cmd.match(/(\$\$(.+?)\$\$)/)
+        break unless md[1] || md[2]
+        input_string = pick md[2].strip
+        return if input_string == nil
+        replaced_cmd = replaced_cmd.sub(md[0], input_string)
+      end
+      LOGGER.debug "Command interpolated with eval blocks: #{replaced_cmd}" if replaced_cmd != cmd
+      replaced_cmd
+    rescue Exception
+      LOGGER.debug "Exception when interplating blocks: #{replaced_cmd}"
+      LOGGER.debug $!.message
+      cmd
+    end
   end
 end
