@@ -63,11 +63,15 @@ module Rmenu
     alias :context :config
 
     def menu
-      context[:menu] ||= history
+      ( context[:menu] || history ) + ( context[:op_menu] || [] )
     end
 
     def history
       config[:history] ||= []
+    end
+
+    def op_menu
+      config[:op_menu] ||= []
     end
 
     def back!

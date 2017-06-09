@@ -35,8 +35,11 @@ module Rmenu
       end
 
       def proc_context item
-        context.keep_open ||= item[:keep_open]
+        context.keep_open = item[:keep_open] || context.keep_open
         context.go_back = item[:go_back] || item[:back]
+        [ :background_color, :foreground_color, :prompt, :lines ].each do |conf|
+          context[conf] = item[conf]
+        end
       end
 
       def validate_context!
