@@ -3,6 +3,11 @@ module Rmenu
     attr_accessor :listening
     attr_accessor :listening_thread
 
+    def initialize(config = {})
+      super config
+      context[:keep_open] ||= 0
+    end
+
     def start
       self.listening = true
       self.listening_thread = Thread.new do
@@ -19,9 +24,10 @@ module Rmenu
     end
 
     def proc
-      result = super
-      return unless result
-      keep_open! if result[:keep_open] || result[:item] && result[:item][:keep_open]
+      context[:keep_open] -= 1
+      context[:keep_open] = 0 if context[:keep_open] < 0
+      super
+      keep_open! context[:item] && context[:item][:keep_open]
       context
     end
 
@@ -44,17 +50,17 @@ module Rmenu
     alias :sav :save_config
     alias :s :save_config
 
-    def keep_open!
-      context[:keep_open] = true
+    def keep_open!(sum = 1)
+      context[:keep_open] += sum.to_i
     end
     alias :ko! :keep_open!
 
     def keep_open?
-      context[:keep_open]
+      context[:keep_open] > 0
     end
 
     def keep_close!
-      context[:keep_open] = false
+      context[:keep_open] = 0
     end
     alias :kc! :keep_close!
   end
