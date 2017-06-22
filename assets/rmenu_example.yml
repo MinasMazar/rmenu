@@ -1,0 +1,77 @@
+---
+:waker_io: "~/.rmenu_waker"
+:prompt: RMENU [{ Time.new.strftime('%y/%m/%d %H:%M:%S') }]
+:case_insensitive: true
+:lines: 51
+:web_browser: firefox
+:editor: gvim
+:exec_in_term: xfce4-terminal -e
+:op_menu:
+- :label: "----- RMENU OPs -------------------------------"
+  :cmd: 
+- :label: " /rmenu/ops/load_config"
+  :cmd: ": self.config = load_config config_file; ko!"
+- :label: " /rmenu/ops/save_config"
+  :cmd: ": save_config config_file"
+- :label: " /rmenu/ops/edit_config"
+  :cmd: ": edit config_file"
+- :label: " /rmenu/ops/delete_item"
+  :cmd: ': context[:history].delete(pick("Delete item", history))'
+- :label: " /rmenu/ops/keep_open! [ko!]"
+  :cmd: ": keep_open!"
+- :label: " /rmenu/ops/keep_close!! [kc!]"
+  :cmd: ": keep_close!"
+- :label: " /rmenu/ops/go_back! [back!, gb!]"
+  :cmd: ": back!"
+  :keep_open: false
+- :label: "* Audio Volume Manager *"
+  :keep_open: true
+  :background_color: "#442299"
+  :cmd:
+  - :label: "-----------------------------------------------"
+    :cmd: ": kc!; back!"
+  - :label: Volume up (+)
+    :cmd: pactl set-sink-volume 0 +10%; notify-send 'Volume +10%' -t 1000
+    :keep_open: true
+  - :label: Volume down (-)
+    :cmd: pactl set-sink-volume 0 -10%; notify-send 'Volume -10%' -t 1000
+    :keep_open: true
+- :label: "-----------------------------------------------"
+  :cmd: 
+:history: &1
+- :label: Ogame.it
+  :cmd: http://ogame.it
+- :label: Mozilla Firefox
+  :cmd: firefox
+- :label: Emacs
+  :cmd: emacs
+- :label: System monitor
+  :cmd: "{context[:exec_in_term]} top"
+- :label: Screenshot
+  :cmd: scrot "~//Dropbox/pictures/shots/%Y%m%d_%H%M%S_scrot.png"
+- :label: Screenshot (grab selection)
+  :cmd: scrot -s "~/Dropbox/pictures/shots/%Y%m%d_%H%M&S_scrot.png"
+- :label: Thunar
+  :cmd: thunar
+- :label: Chromium
+  :cmd: chromium-browser
+- :label: "#Slack"
+  :cmd: slack
+- :label: Search on Google (gg)
+  :cmd: https://www.google.it/?gws_rd=ssl#q={ pick('Search on Google').to_query_s}
+- :label: Search on Youtube (yt)
+  :cmd: https://www.youtube.com/results?search_query={ pick('Search on Youtube').to_query_s}
+- :label: Xfce4-appfinder
+  :cmd: xfce4-appfinder
+- :label: Thunderbird (Mail,Newsgroup and RSS client)
+  :cmd: thunderbird
+- :label: Edit i3 config
+  :cmd: gvim ~/.i3/config
+- :label: Spotify
+  :cmd: spotify
+- :label: I3exit suspend
+  :cmd: i3exit suspend
+- :label: PRY
+  :cmd: "; pry"
+- :label: Download from Youtube
+  :cmd: "; youtube-dl $$Youtube ULR$$"
