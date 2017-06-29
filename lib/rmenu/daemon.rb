@@ -51,7 +51,7 @@ module Rmenu
     alias :s :save_config
 
     def keep_open!(sum = 1)
-      context[:keep_open] += sum.to_i
+      context[:keep_open] = context[:keep_open].to_i + sum.to_i
     end
     alias :ko! :keep_open!
 
