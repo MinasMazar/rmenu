@@ -1,3 +1,4 @@
+require 'rmenu'
 require 'thor'
 
 module Rmenu
