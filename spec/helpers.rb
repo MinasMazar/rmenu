@@ -41,6 +41,44 @@ module Rmenu
   - item2
         EOS
       end
+      def menu_with_progressive_pick_counter
+        [
+          {
+            label: 'Mozilla Firefox',
+            cmd: 'firefox',
+            picked: 1
+          },
+          {
+            label: 'Opera browser',
+            cmd: 'opera',
+            picked: 2
+          },
+          {
+            label: 'Luakit browser',
+            cmd: 'luakit',
+            picked: 3
+          }
+        ]
+      end
+      def menu_with_reverse_pick_counter
+        [
+          {
+            label: 'Mozilla Firefox',
+            cmd: 'firefox',
+            picked: 3
+          },
+          {
+            label: 'Opera browser',
+            cmd: 'opera',
+            picked: 2
+          },
+          {
+            label: 'Luakit browser',
+            cmd: 'luakit',
+            picked: 1
+          }
+        ]
+      end
     end
   end
 end

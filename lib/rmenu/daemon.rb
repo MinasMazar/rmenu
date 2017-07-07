@@ -39,6 +39,10 @@ module Rmenu
       self
     end
 
+    def menu
+      super.sort_by { |item| - item[:picked] || 0 }
+    end
+
     def load_config(c_file = self.config_file)
       self.config = super c_file
     end
