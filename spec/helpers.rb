@@ -37,7 +37,7 @@ module Rmenu
         <<-EOS
 ---
 :history:
-  . item1
+  - item1
   - item2
         EOS
       end

@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Rmenu::Instance do
   let(:described_instance) { described_class.new config}
-  let(:config) { { history_file: RSpec.configuration.history_file } }
+  let(:config) { { config_file: RSpec.configuration.history_file } }
   let(:pipe) { spy }
   let(:item) { nil }
   before do
@@ -13,13 +13,13 @@ RSpec.describe Rmenu::Instance do
 
   describe "#proc" do
     context 'dmenu returned a special command to be evaluated' do
-      subject { described_instance.proc 'test_instance'}
-      let(:item) { ': context.parameter = 3' }
+      subject { described_instance.proc }
+      let(:item) { ': context[:parameter] = 3' }
       before { subject }
 
       it 'evaultate command' do
         expect(Rake).not_to have_received(:sh)
-        expect(subject.parameter).to be == 3
+        expect(subject[:parameter]).to be == 3
       end
     end
   end

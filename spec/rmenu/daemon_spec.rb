@@ -3,7 +3,8 @@ require "spec_helper"
 RSpec.describe Rmenu::Daemon do
   include Rmenu::Test::Helpers
 
-  let(:described_instance) { described_class.new config}
+  subject { described_instance }
+  let(:described_instance) { Rmenu::Daemon.new config}
   let(:config) { { config_file: RSpec.configuration.history_file } }
   before { create_history_file }
 

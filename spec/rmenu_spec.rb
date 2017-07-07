@@ -6,6 +6,6 @@ RSpec.describe Rmenu do
   end
 
   it "has a dmenu wrapper class" do
-    expect(defined?(Rmenu::Dmenu::Wrapper)).to be_truthy
+    expect(defined?(Rmenu::Wrapper::Dmenu)).to be_truthy
   end
 end

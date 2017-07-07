@@ -1,6 +1,7 @@
 require "bundler/setup"
 require "helpers"
 require "rmenu"
+require "pry"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

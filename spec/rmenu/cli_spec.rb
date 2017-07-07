@@ -1,5 +1,4 @@
 require "spec_helper"
-require "rmenu/cli"
 
 __END__
 
