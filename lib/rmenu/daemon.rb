@@ -23,10 +23,10 @@ module Rmenu
       proc
     end
 
-    def proc
+    def proc(item = nil)
       context[:keep_open] -= 1
       context[:keep_open] = 0 if context[:keep_open] < 0
-      super
+      super item
       keep_open! context[:item] && context[:item][:keep_open]
       context
     end

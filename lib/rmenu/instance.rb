@@ -27,8 +27,8 @@ module Rmenu
       save_config if config[:save_on_quit]
     end
 
-    def proc
-      item = rmenu.gets
+    def proc(item = nil)
+      item ||= rmenu.gets
       result = Interactors::ProcItem.call context.merge({
         history: history.dup,
         item: item
