@@ -32,9 +32,12 @@ RSpec.describe Rmenu::Daemon do
     subject { described_instance.menu }
     let(:menu) { [] }
     before do
-      described_instance.instance_variable_set('@config', {
-        history: menu
-      })
+      allow(described_instance).to receive(:exec_cmd)
+      init_context = described_instance.context
+      allow(described_instance).to receive(:context).
+        and_return(init_context.merge({
+        menu: menu
+      }))
     end
 
     context 'when menu has progressive picking' do
@@ -49,6 +52,18 @@ RSpec.describe Rmenu::Daemon do
 
       it { is_expected.to be_an_instance_of Array }
       it { is_expected.to eql menu }
+    end
+
+    context 'when an item is picked 2 times (all starts from zero)' do
+      let(:menu) { menu_with_zero_pick_counter }
+      let!(:item) { menu.sample }
+      before do
+        2.times do
+          described_instance.proc item
+        end
+      end
+
+      it { expect(subject.first).to eql item }
     end
   end
 end

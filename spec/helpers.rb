@@ -79,6 +79,25 @@ module Rmenu
           }
         ]
       end
+      def menu_with_zero_pick_counter
+        [
+          {
+            label: 'Mozilla Firefox',
+            cmd: 'firefox',
+            picked: 0
+          },
+          {
+            label: 'Opera browser',
+            cmd: 'opera',
+            picked: 0
+          },
+          {
+            label: 'Luakit browser',
+            cmd: 'luakit',
+            picked: 0
+          }
+        ]
+      end
     end
   end
 end

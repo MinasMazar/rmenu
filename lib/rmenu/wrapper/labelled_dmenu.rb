@@ -12,7 +12,7 @@ module Rmenu
 
       def run
         item = super
-        labelled_item = labelled_items.find { |i| (i.is_a?(Hash) ? i[:label] : nil ) == item }
+        labelled_item = labelled_items.find { |i| i[:label] == item }
         labelled_item || { label: item, cmd: item }
       end
       alias :gets :run

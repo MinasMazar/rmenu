@@ -24,10 +24,17 @@ module Rmenu
     end
 
     def proc(item = nil)
+      context[:item] = item
       context[:keep_open] -= 1
       context[:keep_open] = 0 if context[:keep_open] < 0
-      super item
+      super context[:item]
       keep_open! context[:item] && context[:item][:keep_open]
+      # Incremnt pick counter
+      menu_item = menu.find { |i| i == context[:item] }
+      if menu_item
+        menu_item[:picked] ||= 0
+        menu_item[:picked] += 1
+      end
       context
     end
 
@@ -40,7 +47,7 @@ module Rmenu
     end
 
     def menu
-      super.sort_by { |item| - item[:picked] || 0 }
+      super.sort_by { |item| -( item[:picked] || 0 ) }
     end
 
     def load_config(c_file = self.config_file)
