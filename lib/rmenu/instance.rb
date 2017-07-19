@@ -5,6 +5,7 @@ require "rake"
 
 module Rmenu
   class Instance
+    USER_SOURCE_FILE = File.expand_path(File.join("~",".rmenu.rb"))
     include MenuHelper
 
     attr_accessor :config_file
@@ -17,6 +18,7 @@ module Rmenu
       @config = config
       self.config.merge! load_config config_file
       context[:menu] = history
+      Rmenu.load_source USER_SOURCE_FILE, self
     end
 
     def start
