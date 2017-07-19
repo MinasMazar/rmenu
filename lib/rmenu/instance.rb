@@ -100,8 +100,9 @@ module Rmenu
     end
     alias :p :pick
 
-    def message(msg)
-      Wrapper::Dmenu.new(context.merge prompt: msg, items: []).run
+    def message(msg, options = {})
+      options.merge! context
+      Wrapper::Dmenu.new(options.merge prompt: msg, items: []).run
     end
     alias :m :message
 
