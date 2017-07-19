@@ -2,6 +2,7 @@ require "rmenu/menu_helper"
 require "rmenu/wrapper/dmenu"
 require "rmenu/wrapper/labelled_dmenu"
 require "rake"
+require "clipboard"
 
 module Rmenu
   class Instance
@@ -135,6 +136,11 @@ module Rmenu
         spawn_cmd "#{context[:editor]} \"#{file}\""
       end
     end
+
+    def copy_to_clipboard
+      Clipboard.copy pick("YANK TEXT")
+    end
+    alias :copy :copy_to_clipboard
 
     private
 
